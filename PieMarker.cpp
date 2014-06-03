@@ -4,11 +4,15 @@
 #include "PiePlot.h"
 #include "PieMarker.h"
 
+/*!
+ * \brief PieMarker::PieMarker constructor of PieMarker class
+ */
 PieMarker::PieMarker()
 {
     setZ(1000);
     setRenderHint(QwtPlotItem::RenderAntialiased, true);
 }
+
 
 int PieMarker::rtti() const
 {

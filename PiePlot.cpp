@@ -12,53 +12,9 @@
 #include "PieMarker.h"
 #include "PiePlot.h"
 
-//class TimeScaleDraw: public QwtScaleDraw
-//{
-//public:
-//    TimeScaleDraw(const QTime &base):
-//        baseTime(base)
-//    {
-//    }
-//    virtual QwtText label(double v) const
-//    {
-//        QTime upTime = baseTime.addSecs((int)v);
-//        return upTime.toString();
-//    }
-//private:
-//    QTime baseTime;
-//};
-
-//class Background: public QwtPlotItem
-//{
-//public:
-//    Background()
-//    {
-//        setZ(0.0);
-//    }
-
-//    virtual int rtti() const
-//    {
-//        return QwtPlotItem::Rtti_PlotUserItem;
-//    }
-
-//    virtual void draw(QPainter *painter,
-//        const QwtScaleMap &, const QwtScaleMap &yMap,
-//        const QRectF &rect) const
-//    {
-//        QColor c(Qt::white);
-//        QRectF r = rect;
-
-//        for ( int i = 100; i > 0; i -= 10 )
-//        {
-//            r.setBottom(yMap.transform(i - 10));
-//            r.setTop(yMap.transform(i));
-//            painter->fillRect(r, c);
-
-//            c = c.dark(110);
-//        }
-//    }
-//};
-
+/*!
+ * \brief The PiePlotCurve class that creates a curve.
+ */
 class PiePlotCurve: public QwtPlotCurve
 {
 public:
@@ -78,6 +34,10 @@ public:
     }
 };
 
+/*!
+ * \brief PiePlot::PiePlot Constructor of PiePlot Class, it initializes all the curves ready to be plotted
+ * \param parent is the widget that will contain the plot (Pie Chart)
+ */
 PiePlot::PiePlot(QWidget *parent):
     QwtPlot(parent),
     dataCount(0)
@@ -92,12 +52,6 @@ PiePlot::PiePlot(QWidget *parent):
     legend->setItemMode(QwtLegend::ReadOnlyItem);
     insertLegend(legend, QwtPlot::RightLegend);
 
-    //    setAxisTitle(QwtPlot::xBottom, " System Uptime [h:m:s]");
-    //    setAxisScaleDraw(QwtPlot::xBottom,
-    //        new TimeScaleDraw(PieStat.upTime()));
-    //    setAxisScale(QwtPlot::xBottom, 0, HISTORY);
-    //    setAxisLabelRotation(QwtPlot::xBottom, -50.0);
-    //    setAxisLabelAlignment(QwtPlot::xBottom, Qt::AlignLeft | Qt::AlignBottom);
 
     /*
      In situations, when there is a label at the most right position of the
@@ -107,13 +61,6 @@ PiePlot::PiePlot(QWidget *parent):
      We don't need to do the same for the left border, because there
      is enough space for the overlapping label below the left scale.
      */
-
-    //    QwtScaleWidget *scaleWidget = axisWidget(QwtPlot::xBottom);
-    //    const int fmh = QFontMetrics(scaleWidget->font()).height();
-    //    scaleWidget->setMinBorderDist(0, fmh / 2);
-
-    //    setAxisTitle(QwtPlot::yLeft, "Pie Usage [%]");
-    //    setAxisScale(QwtPlot::yLeft, 0, 100);
 
     enableAxis(QwtPlot::yLeft,false);
     enableAxis(QwtPlot::xBottom,false);
@@ -152,16 +99,12 @@ PiePlot::PiePlot(QWidget *parent):
     showCurve(data[Plot4].curve, false);
 
 
-
-    //    for ( int i = 0; i < HISTORY; i++ )
-    //        timeData[HISTORY - 1 - i] = i;
-
-    //    (void)startTimer(1000); // 1 second
-
-    //    connect(this, SIGNAL(legendChecked(QwtPlotItem *, bool)),
-    //            SLOT(showCurve(QwtPlotItem *, bool)));
 }
 
+/*!
+ * \brief PiePlot::plotStaticValues this function updates the value of Pie Chart and then replot them.
+ * \param inputData is a vector with same size of NumPlots
+ */
 void PiePlot::plotStaticValues(QVector<double> *inputData)
 {
     if(inputData->size() == NumPlots)
@@ -187,6 +130,11 @@ void PiePlot::timerEvent(QTimerEvent *)
 {
 }
 
+/*!
+ * \brief PiePlot::showCurve this method makes possible to hide curves that will appear behind the Pie Chart
+ * \param item the object to set visible
+ * \param on true for visible, false for hided
+ */
 void PiePlot::showCurve(QwtPlotItem *item, bool on)
 {
     item->setVisible(on);
