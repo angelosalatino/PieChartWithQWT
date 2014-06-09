@@ -78,7 +78,7 @@ PiePlot::PiePlot(QStringList pieNames, QVector<QColor> pieColors, QWidget *paren
     data = new struct pieCurves[numPlots];
     
     PiePlotCurve *curve;
-
+    // iterative allocation
     for (int i  = 0; i < numPlots; i++)
     {
         curve = new PiePlotCurve(pieNames.at(i));
@@ -96,12 +96,12 @@ PiePlot::~PiePlot()
 {
     if(numPlots > 0)
     {
-       for (int i = 0; i < numPlots; i++)
-       {
-           delete data[i].curve;
-       }
+        for (int i = 0; i < numPlots; i++)
+        {
+            delete data[i].curve;
+        }
 
-       delete data;
+        delete data;
     }
 }
 
