@@ -4,11 +4,19 @@
 //-----------------------------------------------------------------
 
 #include <qwt_plot_item.h>
-
+/*!
+ * \brief The PieMarker class creates the pie chart
+ */
 class PieMarker: public QwtPlotItem
 {
+private:
+    int height;
+    int width;
+    int margin;
+    int numPlots;
+
 public:
-    PieMarker();
+    PieMarker(int numPlots);
 
     virtual int rtti() const;
 

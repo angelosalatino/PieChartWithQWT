@@ -7,41 +7,63 @@
 /*!
  * \brief PieMarker::PieMarker constructor of PieMarker class
  */
-PieMarker::PieMarker()
+PieMarker::PieMarker(int numPlots)
 {
     setZ(1000);
     setRenderHint(QwtPlotItem::RenderAntialiased, true);
+
+    /* Defining some parameters*/
+    this->height = 300;
+    this->width = 300;
+    this->margin = 10;
+    this->numPlots = numPlots;
 }
 
-
+/*!
+ * \brief PieMarker::rtti
+ * \return
+ */
 int PieMarker::rtti() const
 {
     return QwtPlotItem::Rtti_PlotUserItem;
 }
 
+/*!
+ * \brief PieMarker::draw
+ * \param p
+ * \param rect
+ */
 void PieMarker::draw(QPainter *p,
-    const QwtScaleMap &, const QwtScaleMap &,
-    const QRectF &rect) const
+                     const QwtScaleMap &, const QwtScaleMap &,
+                     const QRectF &rect) const
 {
     const PiePlot *piePlot = (PiePlot *)plot();
 
     const QwtScaleMap yMap = piePlot->canvasMap(QwtPlot::yLeft);
 
-    const int margin = 10;
     
     QRect pieRect;
     pieRect.setX(rect.x() + margin);
     pieRect.setY(rect.y() + margin);
-        pieRect.setHeight( 300);
-        pieRect.setWidth( 300 );
-//    pieRect.setHeight( qRound(yMap.transform(80.0)) );
-//    pieRect.setWidth( pieRect.height() );
-    
-    const int dataType[] = { PiePlot::Plot1,PiePlot::Plot2,PiePlot::Plot3,PiePlot::Plot4};
+    pieRect.setHeight( height );
+    pieRect.setWidth( width );
+    //    pieRect.setHeight( qRound(yMap.transform(80.0)) );
+    //    pieRect.setWidth( pieRect.height() );
+
+
+    //////////////////////////////////////////
+    /*
+      With the following line is possible to set how many and which component should be whown in the pie chart
+     */
+    int dataType[numPlots];
+    for (int i = 0; i < numPlots; i++ )
+        dataType[i] = i;
+
+    //////////////////////////////////////////
 
     int angle = (int)(5760 * 0.75);
-    for ( unsigned int i = 0; 
-        i < sizeof(dataType) / sizeof(dataType[0]); i++ )
+    for ( unsigned int i = 0;
+          i < sizeof(dataType) / sizeof(dataType[0]); i++ )
     {
         const QwtPlotCurve *curve = piePlot->pieCurve(dataType[i]);
         if ( curve->dataSize() > 0 )

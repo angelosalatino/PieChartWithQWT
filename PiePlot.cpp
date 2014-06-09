@@ -38,7 +38,7 @@ public:
  * \brief PiePlot::PiePlot Constructor of PiePlot Class, it initializes all the curves ready to be plotted
  * \param parent is the widget that will contain the plot (Pie Chart)
  */
-PiePlot::PiePlot(QWidget *parent):
+PiePlot::PiePlot(QStringList pieNames, QVector<QColor> pieColors, QWidget *parent):
     QwtPlot(parent),
     dataCount(0)
 {
@@ -53,6 +53,8 @@ PiePlot::PiePlot(QWidget *parent):
     insertLegend(legend, QwtPlot::RightLegend);
 
 
+    numPlots = pieNames.size();
+
     /*
      In situations, when there is a label at the most right position of the
      scale, additional space is needed to display the overlapping part
@@ -64,41 +66,43 @@ PiePlot::PiePlot(QWidget *parent):
 
     enableAxis(QwtPlot::yLeft,false);
     enableAxis(QwtPlot::xBottom,false);
-    PieMarker *pie = new PieMarker();
+
+    PieMarker *pie = new PieMarker(numPlots);
     pie->attach(this);
+
+    /*
+     * Every following curve represents a single part in pie chart.
+     * For this reason every part in pie chart needs a specific curve
+     */
+
+    data = new struct pieCurves[numPlots];
     
     PiePlotCurve *curve;
 
-    curve = new PiePlotCurve("Plot 1");
-    curve->setColor(Qt::green);
-    curve->attach(this);
-    data[Plot1].curve = curve;
+    for (int i  = 0; i < numPlots; i++)
+    {
+        curve = new PiePlotCurve(pieNames.at(i));
+        curve->setColor(pieColors.at(i));
+        curve->attach(this);
+        data[i].curve = curve;
 
-    curve = new PiePlotCurve("Plot 2");
-    curve->setColor(Qt::red);
-    curve->setZ(curve->z() - 1);
-    curve->attach(this);
-    data[Plot2].curve = curve;
-
-    curve = new PiePlotCurve("Plot 3");
-    curve->setColor(Qt::blue);
-    curve->setZ(curve->z() - 2);
-    curve->attach(this);
-    data[Plot3].curve = curve;
-
-    curve = new PiePlotCurve("Plot 4");
-    curve->setColor(Qt::cyan);
-    curve->setZ(curve->z() - 3);
-    curve->attach(this);
-    data[Plot4].curve = curve;
+        showCurve(data[i].curve, false);
+    }
 
 
-    showCurve(data[Plot1].curve, false);
-    showCurve(data[Plot2].curve, false);
-    showCurve(data[Plot3].curve, false);
-    showCurve(data[Plot4].curve, false);
+}
 
+PiePlot::~PiePlot()
+{
+    if(numPlots > 0)
+    {
+       for (int i = 0; i < numPlots; i++)
+       {
+           delete data[i].curve;
+       }
 
+       delete data;
+    }
 }
 
 /*!
@@ -107,7 +111,7 @@ PiePlot::PiePlot(QWidget *parent):
  */
 void PiePlot::plotStaticValues(QVector<double> *inputData)
 {
-    if(inputData->size() == NumPlots)
+    if(inputData->size() == numPlots)
         for (int i = 0; i < inputData->size(); i++)
             data[i].data[0] = inputData->at(i);
 
@@ -118,16 +122,12 @@ void PiePlot::plotStaticValues(QVector<double> *inputData)
     for ( int j = 0; j < HISTORY; j++ )
         timeData[j]++;
 
-    for ( int c = 0; c < NumPlots; c++ )
+    for ( int c = 0; c < numPlots; c++ )
     {
         data[c].curve->setRawSamples(
                     timeData, data[c].data, dataCount);
     }
     replot();
-}
-
-void PiePlot::timerEvent(QTimerEvent *)
-{
 }
 
 /*!
@@ -144,5 +144,6 @@ void PiePlot::showCurve(QwtPlotItem *item, bool on)
     
     replot();
 }
+
 
 
