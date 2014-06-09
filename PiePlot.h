@@ -28,6 +28,7 @@ private Q_SLOTS:
     void showCurve(QwtPlotItem *, bool on);
 
 private:
+
     struct pieCurves
     {
         QwtPlotCurve *curve;

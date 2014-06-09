@@ -4,6 +4,7 @@
 #include "PiePlot.h"
 #include "PieMarker.h"
 
+
 /*!
  * \brief PieMarker::PieMarker constructor of PieMarker class
  */
@@ -19,6 +20,7 @@ PieMarker::PieMarker(int numPlots)
     this->numPlots = numPlots;
 }
 
+
 /*!
  * \brief PieMarker::rtti
  * \return
@@ -27,6 +29,7 @@ int PieMarker::rtti() const
 {
     return QwtPlotItem::Rtti_PlotUserItem;
 }
+
 
 /*!
  * \brief PieMarker::draw

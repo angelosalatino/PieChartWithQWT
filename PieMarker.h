@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------
 
 #include <qwt_plot_item.h>
+
+
 /*!
  * \brief The PieMarker class creates the pie chart
  */

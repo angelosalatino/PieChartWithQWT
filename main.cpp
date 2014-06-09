@@ -6,7 +6,7 @@ int main(int argc, char **argv)
 {
     QApplication a(argc, argv);
 
-    //////////////////////////////////////////////////SETTING SOME PARAMETERS
+    //////////////////////////////////////////////////---> SETTING SOME PARAMETERS
     QStringList pieNames;
     pieNames<<"Plot 1"<<"Plot 2"<<"Plot 3"<<"Plot 4"<<"Plot 5";
     QVector<QColor> pieColors;
@@ -24,7 +24,7 @@ int main(int argc, char **argv)
         QVBoxLayout *layout = new QVBoxLayout(&vBox);
         layout->addWidget(plot);
 
-        /////////////////////////////////////////SETTING VALUES
+        /////////////////////////////////////////---> SETTING VALUES
         QVector<double> pieValues;
         pieValues<<15<<25<<35<<20<<5;
         ///////////////////////////////////////////////////////
