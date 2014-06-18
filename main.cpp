@@ -6,7 +6,7 @@ int main(int argc, char **argv)
 {
     QApplication a(argc, argv);
 
-    int sizeOfPie = 50;
+    int sizeOfPie = 300;
 
     //////////////////////////////////////////////////---> SETTING SOME PARAMETERS
     QStringList pieNames;
@@ -36,7 +36,7 @@ int main(int argc, char **argv)
             plot->plotStaticValues(&pieValues);
 
 
-            vBox.resize(sizeOfPie+147,sizeOfPie+60);
+            vBox.resize(sizeOfPie+150,sizeOfPie+60);
             vBox.show();
 
             return a.exec();
