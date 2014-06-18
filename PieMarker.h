@@ -18,7 +18,7 @@ private:
     int numPlots;
 
 public:
-    PieMarker(int numPlots);
+    PieMarker(int numPlots, int size);
 
     virtual int rtti() const;
 

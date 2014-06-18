@@ -38,7 +38,7 @@ public:
  * \brief PiePlot::PiePlot Constructor of PiePlot Class, it initializes all the curves ready to be plotted
  * \param parent is the widget that will contain the plot (Pie Chart)
  */
-PiePlot::PiePlot(QStringList pieNames, QVector<QColor> pieColors, QWidget *parent):
+PiePlot::PiePlot(QStringList pieNames, QVector<QColor> pieColors, int sizeOfPie, QWidget *parent):
     QwtPlot(parent),
     dataCount(0)
 {
@@ -67,7 +67,7 @@ PiePlot::PiePlot(QStringList pieNames, QVector<QColor> pieColors, QWidget *paren
     enableAxis(QwtPlot::yLeft,false);
     enableAxis(QwtPlot::xBottom,false);
 
-    PieMarker *pie = new PieMarker(numPlots);
+    PieMarker *pie = new PieMarker(numPlots, sizeOfPie);
     pie->attach(this);
 
     /*

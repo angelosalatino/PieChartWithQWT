@@ -6,6 +6,8 @@ int main(int argc, char **argv)
 {
     QApplication a(argc, argv);
 
+    int sizeOfPie = 50;
+
     //////////////////////////////////////////////////---> SETTING SOME PARAMETERS
     QStringList pieNames;
     pieNames<<"Plot 1"<<"Plot 2"<<"Plot 3"<<"Plot 4"<<"Plot 5";
@@ -16,7 +18,7 @@ int main(int argc, char **argv)
     if(pieColors.size() == pieNames.size())
     {
         QWidget vBox;
-        PiePlot *plot = new PiePlot(pieNames, pieColors, &vBox);
+        PiePlot *plot = new PiePlot(pieNames, pieColors,sizeOfPie, &vBox);
 
         const int margin = 5;
         plot->setContentsMargins(margin, margin, margin, margin);
@@ -34,7 +36,7 @@ int main(int argc, char **argv)
             plot->plotStaticValues(&pieValues);
 
 
-            vBox.resize(450,360);
+            vBox.resize(sizeOfPie+147,sizeOfPie+60);
             vBox.show();
 
             return a.exec();

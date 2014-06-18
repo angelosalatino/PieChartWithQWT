@@ -16,7 +16,7 @@ class PiePlot : public QwtPlot
 public:
 
 
-    PiePlot(QStringList pieNames, QVector<QColor> pieColors, QWidget * = 0);
+    PiePlot(QStringList pieNames, QVector<QColor> pieColors, int sizeOfPie = 300, QWidget * = 0);
     ~PiePlot();
 
     const QwtPlotCurve *pieCurve(int id) const

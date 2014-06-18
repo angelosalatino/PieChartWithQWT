@@ -8,14 +8,14 @@
 /*!
  * \brief PieMarker::PieMarker constructor of PieMarker class
  */
-PieMarker::PieMarker(int numPlots)
+PieMarker::PieMarker(int numPlots, int size)
 {
     setZ(1000);
     setRenderHint(QwtPlotItem::RenderAntialiased, true);
 
     /* Defining some parameters*/
-    this->height = 300;
-    this->width = 300;
+    this->height = size;
+    this->width = size;
     this->margin = 10;
     this->numPlots = numPlots;
 }
